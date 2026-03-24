@@ -2,13 +2,17 @@
   "name": "UCL_Remider_Expire",
   "projectId": "365c92b9-7f55-437a-8e30-bc4fa7d2684b",
   "description": "Blank Process",
-  "main": "Main.xaml",
+  "main": "Main_Remider_Expire.xaml",
   "dependencies": {
+    "BaraUtility": "[1.0.1]",
+    "UiPath.Database.Activities": "[2.0.0]",
     "UiPath.Excel.Activities": "[3.4.1]",
-    "UiPath.Mail.Activities": "[2.7.10]",
-    "UiPath.System.Activities": "[25.10.5]",
+    "UiPath.Mail.Activities": "[2.7.11]",
+    "UiPath.MicrosoftOffice365.Activities": "[3.7.10]",
+    "UiPath.System.Activities": "[25.12.2]",
     "UiPath.Testing.Activities": "[25.10.1]",
-    "UiPath.UIAutomation.Activities": "[25.10.26]"
+    "UiPath.UIAutomation.Activities": "[25.10.26]",
+    "UiPath.Word.Activities": "[2.4.1]"
   },
   "webServices": [],
   "entitiesStores": [],
@@ -48,8 +52,8 @@
   "expressionLanguage": "VisualBasic",
   "entryPoints": [
     {
-      "filePath": "Main.xaml",
-      "uniqueId": "638872e2-7e1d-44c9-8e20-500aa11002c9",
+      "filePath": "Main_Remider_Expire.xaml",
+      "uniqueId": "3d4351d5-801e-4582-88f5-2e8f5a95b495",
       "input": [],
       "output": []
     }
