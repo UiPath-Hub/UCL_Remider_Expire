@@ -168,7 +168,7 @@
         </Assign.To>
         <Assign.Value>
           <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" xml:space="preserve">[New Dictionary(Of String,String) From {{"strTemplatePath_Reminder_Expire", inout_Config("strTemplatePath_Reminder_Expire").ToString},
-{"strProcessedResourceFilePath", inout_Config("strProcessedResourceFilePath").ToString}}]</InArgument>
+{"strTemplatePath_Reminder_Expire_Not_found", inout_Config("strTemplatePath_Reminder_Expire_Not_found").ToString}}]</InArgument>
         </Assign.Value>
       </Assign>
       <ui:ForEach x:TypeArguments="scg:KeyValuePair(x:String, x:String)" CurrentIndex="{x:Null}" DisplayName="For Each currentTemplate" sap:VirtualizedContainerService.HintSize="514,1800" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[dictAllTempPath]">

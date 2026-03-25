@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/word" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ucat="clr-namespace:UiPath.Core.Activities.TextModifications;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/word" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ucat="clr-namespace:UiPath.Core.Activities.TextModifications;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
     <x:Property Name="in_DT_GOING_TO_EXPIRE_DATA" Type="InArgument(sd:DataTable)" />
@@ -124,7 +124,7 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <If Condition="[in_DT_GOING_TO_EXPIRE_DATA isnot Nothing AndAlso in_DT_GOING_TO_EXPIRE_DATA.RowCount &gt; 0]" DisplayName="If Transaction reports exist" sap:VirtualizedContainerService.HintSize="524,6181" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[in_DT_GOING_TO_EXPIRE_DATA isnot Nothing AndAlso in_DT_GOING_TO_EXPIRE_DATA.RowCount &gt; 0]" DisplayName="If Transaction reports exist" sap:VirtualizedContainerService.HintSize="524,6802" sap2010:WorkflowViewState.IdRef="If_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -132,14 +132,13 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then Reminder_Expire" sap:VirtualizedContainerService.HintSize="522,4129" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence DisplayName="Then Reminder_Expire" sap:VirtualizedContainerService.HintSize="522,4451" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <Sequence.Variables>
             <Variable x:TypeArguments="sd:DataTable" Name="dtReport" />
             <Variable x:TypeArguments="x:String" Name="strColumnName_No" />
             <Variable x:TypeArguments="x:String" Name="strColumnName_AGREEMENT_NO" />
             <Variable x:TypeArguments="x:String" Name="strColumnName_COMPANY_NAME" />
             <Variable x:TypeArguments="x:String" Name="strColumnName_INVENTORY_NAME" />
-            <Variable x:TypeArguments="x:Int32" Name="intNo" />
             <Variable x:TypeArguments="x:String" Name="strTemplateString" />
             <Variable x:TypeArguments="x:String" Name="strColumnName_PROFILE_PERIOD_END" />
             <Variable x:TypeArguments="x:String" Name="strColumnName_DAYS_UNTIL_END" />
@@ -218,7 +217,7 @@
 }]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:GenerateDataTable ColumnSizes="{x:Null}" NewLineSeparator="{x:Null}" Positions="{x:Null}" CSVParsing="True" ColumnSeparators="," DataTable="[dtReport]" DisplayName="Generate Data Table From Text" sap:VirtualizedContainerService.HintSize="488,235" sap2010:WorkflowViewState.IdRef="GenerateDataTable_1" Input="[$&quot;{strColumnName_No},{strColumnName_AGREEMENT_NO},{strColumnName_COMPANY_NAME},{strColumnName_INVENTORY_NAME}&#xA;{strColumnName_No},{strColumnName_AGREEMENT_NO},{strColumnName_COMPANY_NAME},{strColumnName_INVENTORY_NAME}&quot;]" UseColumnHeader="True" />
+          <ui:GenerateDataTable ColumnSizes="{x:Null}" NewLineSeparator="{x:Null}" Positions="{x:Null}" CSVParsing="True" ColumnSeparators="," DataTable="[dtReport]" DisplayName="Generate Data Table From Text" sap:VirtualizedContainerService.HintSize="488,235" sap2010:WorkflowViewState.IdRef="GenerateDataTable_1" Input="[$&quot;{strColumnName_No},{strColumnName_COMPANY_NAME},{strColumnName_AGREEMENT_NO},{strColumnName_INVENTORY_NAME},{strColumnName_PROFILE_PERIOD_END},{strColumnName_DAYS_UNTIL_END}&#xD;&#xA;{strColumnName_No},{strColumnName_COMPANY_NAME},{strColumnName_AGREEMENT_NO},{strColumnName_INVENTORY_NAME},{strColumnName_PROFILE_PERIOD_END},{strColumnName_DAYS_UNTIL_END}&quot;]" UseColumnHeader="True" />
           <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="488,383" sap2010:WorkflowViewState.IdRef="CommentOut_1">
             <ui:CommentOut.Body>
               <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="450,272" sap2010:WorkflowViewState.IdRef="Sequence_4">
@@ -237,7 +236,7 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </ui:CommentOut>
-          <ui:ForEach x:TypeArguments="x:Int32" CurrentIndex="[intNo]" DisplayName="For Each currentNo" sap:VirtualizedContainerService.HintSize="488,1110" sap2010:WorkflowViewState.IdRef="ForEach`1_4" Values="[Enumerable.Range(1, in_DT_GOING_TO_EXPIRE_DATA.RowCount)]">
+          <ui:ForEach x:TypeArguments="x:Int32" CurrentIndex="{x:Null}" DisplayName="For Each currentNo" sap:VirtualizedContainerService.HintSize="488,1110" sap2010:WorkflowViewState.IdRef="ForEach`1_4" Values="[Enumerable.Range(1, in_DT_GOING_TO_EXPIRE_DATA.RowCount)]">
             <ui:ForEach.Body>
               <ActivityAction x:TypeArguments="x:Int32">
                 <ActivityAction.Argument>
@@ -265,7 +264,7 @@
                       <OutArgument x:TypeArguments="x:Object">[drNewRow.Item( strColumnName_No)]</OutArgument>
                     </Assign.To>
                     <Assign.Value>
-                      <InArgument x:TypeArguments="x:Object">[intNo]</InArgument>
+                      <InArgument x:TypeArguments="x:Object">[currentNo]</InArgument>
                     </Assign.Value>
                   </Assign>
                   <ui:ForEach x:TypeArguments="scg:KeyValuePair(x:String, x:String)" CurrentIndex="{x:Null}" DisplayName="For Each currentColumn" sap:VirtualizedContainerService.HintSize="452,357" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[dictContentDataMap]">
@@ -285,7 +284,7 @@
                               <OutArgument x:TypeArguments="x:Object">[drNewRow.Item(currentColumn.Key)]</OutArgument>
                             </Assign.To>
                             <Assign.Value>
-                              <InArgument x:TypeArguments="x:Object">[in_DT_GOING_TO_EXPIRE_DATA.Rows( intNo-1).Item( currentColumn.Value).ToString]</InArgument>
+                              <InArgument x:TypeArguments="x:Object">[in_DT_GOING_TO_EXPIRE_DATA.Rows( currentNo-1).Item( currentColumn.Value).ToString]</InArgument>
                             </Assign.Value>
                           </Assign>
                         </Sequence>
@@ -309,62 +308,47 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </ui:ForEach>
-          <p:WordApplicationScope SensitivityLabel="{x:Null}" CreateNewFile="False" DisplayName="Word Application Scope" FilePath="[in_Config(&quot;strTemplatePath_Reminder_Expire&quot;).ToString]" sap:VirtualizedContainerService.HintSize="488,1694" sap2010:WorkflowViewState.IdRef="WordApplicationScope_1" SensitivityOperation="None">
+          <p:WordApplicationScope SensitivityLabel="{x:Null}" CreateNewFile="False" DisplayName="Word Application Scope" FilePath="[in_Config(&quot;strTemplatePath_Reminder_Expire&quot;).ToString]" sap:VirtualizedContainerService.HintSize="488,2016" sap2010:WorkflowViewState.IdRef="WordApplicationScope_1" SensitivityOperation="None">
             <p:WordApplicationScope.Body>
               <ActivityAction x:TypeArguments="ui:WordDocument">
                 <ActivityAction.Argument>
                   <DelegateInArgument x:TypeArguments="ui:WordDocument" Name="WordDocumentScope" />
                 </ActivityAction.Argument>
-                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="450,1563" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="450,1885" sap2010:WorkflowViewState.IdRef="Sequence_10">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <p:WordReplaceText Found="{x:Null}" DisplayName="Replace Text in Document" sap:VirtualizedContainerService.HintSize="416,222" sap2010:WorkflowViewState.IdRef="WordReplaceText_1" Replace="[Environment.NewLine]" ReplaceAll="True" Search="^p" />
+                  <p:WordReplaceText Found="{x:Null}" DisplayName="Replace Text in Document" sap:VirtualizedContainerService.HintSize="416,222" sap2010:WorkflowViewState.IdRef="WordReplaceText_1" Replace="&lt;B&gt;" ReplaceAll="True" Search="^p" />
                   <p:WordReplaceText Found="{x:Null}" DisplayName="Replace Text" sap:VirtualizedContainerService.HintSize="416,222" sap2010:WorkflowViewState.IdRef="WordReplaceText_2" Replace="[Now.Day.ToString]" ReplaceAll="True" Search="$strDateTime$" />
                   <p:WordReplaceText Found="{x:Null}" DisplayName="Replace Text" sap:VirtualizedContainerService.HintSize="416,222" sap2010:WorkflowViewState.IdRef="WordReplaceText_3" Replace="[Now.Month.ToString]" ReplaceAll="True" Search="$strCurrentMonth$" />
                   <p:WordReplaceText Found="{x:Null}" DisplayName="Replace Text" sap:VirtualizedContainerService.HintSize="416,222" sap2010:WorkflowViewState.IdRef="WordReplaceText_4" Replace="[Now.Year.ToString]" ReplaceAll="True" Search="$strCurrentYear$" />
                   <p:WordReplaceText Found="{x:Null}" DisplayName="Replace Text" sap:VirtualizedContainerService.HintSize="416,222" sap2010:WorkflowViewState.IdRef="WordReplaceText_5" Replace="[Now.ToString(&quot;HH&quot;)]" ReplaceAll="True" Search="$strTimeHH$" />
                   <p:WordReplaceText Found="{x:Null}" DisplayName="Replace Text" sap:VirtualizedContainerService.HintSize="416,222" sap2010:WorkflowViewState.IdRef="WordReplaceText_6" Replace="[Now.ToString(&quot;mm&quot;)]" ReplaceAll="True" Search="$strTimeMinute$" />
                   <p:WordReadText DisplayName="Read Text" sap:VirtualizedContainerService.HintSize="416,123" sap2010:WorkflowViewState.IdRef="WordReadText_1" Text="[strTemplateString]" />
-                  <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="416,48" sap2010:WorkflowViewState.IdRef="CommentOut_2">
-                    <ui:CommentOut.Body>
-                      <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="450,430" sap2010:WorkflowViewState.IdRef="Sequence_16">
-                        <sap:WorkflowViewStateService.ViewState>
-                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                          </scg:Dictionary>
-                        </sap:WorkflowViewStateService.ViewState>
-                        <ui:ModifyText DisplayName="Modify Text" sap:VirtualizedContainerService.HintSize="416,370" sap2010:WorkflowViewState.IdRef="ModifyText_1" OutputText="[strTemplateString]" SourceText="[strTemplateString]">
-                          <ui:ModifyText.Body>
-                            <ActivityAction>
-                              <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_9">
-                                <sap:WorkflowViewStateService.ViewState>
-                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                  </scg:Dictionary>
-                                </sap:WorkflowViewStateService.ViewState>
-                                <ucat:FindAndReplaceTextModification DisplayName="Find and replace text" sap:VirtualizedContainerService.HintSize="334,161" sap2010:WorkflowViewState.IdRef="FindAndReplaceTextModification_1" ReplaceText="[Environment.NewLine]" SearchText="&lt;B&gt;" />
-                              </Sequence>
-                            </ActivityAction>
-                          </ui:ModifyText.Body>
-                        </ui:ModifyText>
-                      </Sequence>
-                    </ui:CommentOut.Body>
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </ui:CommentOut>
+                  <ui:ModifyText DisplayName="Modify Text" sap:VirtualizedContainerService.HintSize="416,370" sap2010:WorkflowViewState.IdRef="ModifyText_3" OutputText="[strTemplateString]" SourceText="[strTemplateString]">
+                    <ui:ModifyText.Body>
+                      <ActivityAction>
+                        <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ucat:FindAndReplaceTextModification DisplayName="Find and replace text" sap:VirtualizedContainerService.HintSize="334,161" sap2010:WorkflowViewState.IdRef="FindAndReplaceTextModification_1" ReplaceText="[Environment.NewLine]" SearchText="&lt;B&gt;" />
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ModifyText.Body>
+                  </ui:ModifyText>
                 </Sequence>
               </ActivityAction>
             </p:WordApplicationScope.Body>
           </p:WordApplicationScope>
           <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="SendEmail - Invoke Workflow File (Workflow\SendEmail.xaml)" sap:VirtualizedContainerService.HintSize="488,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Workflow\SendEmail.xaml">
             <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="s:String[]" x:Key="in_ARRSTR_TO">[in_Config("strMailSendTo").ToString.Split(",")]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_STR_MAIL_SUBJECT">[in_Config("strMailSubject_Report").ToString]</InArgument>
               <InArgument x:TypeArguments="sd:DataTable" x:Key="in_DT_REPORT_TABLE">[dtReport]</InArgument>
               <InArgument x:TypeArguments="x:String" x:Key="in_STR_TEMPLATE_STRING">[strTemplateString]</InArgument>
               <InArgument x:TypeArguments="x:String" x:Key="in_STR_BODY_SPLITTER">[in_Config("strTemplateReplaceString_ExpireDataTable").ToString]</InArgument>
@@ -373,19 +357,19 @@
         </Sequence>
       </If.Then>
       <If.Else>
-        <Sequence DisplayName="Else Reminder_ExpireNot_found" sap:VirtualizedContainerService.HintSize="522,1922" sap2010:WorkflowViewState.IdRef="Sequence_3">
+        <Sequence DisplayName="Else Reminder_ExpireNot_found" sap:VirtualizedContainerService.HintSize="522,2244" sap2010:WorkflowViewState.IdRef="Sequence_3">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <p:WordApplicationScope SensitivityLabel="{x:Null}" CreateNewFile="False" DisplayName="Word Application Scope" FilePath="[in_Config(&quot;strTemplatePath_Reminder_Expire&quot;).ToString]" sap:VirtualizedContainerService.HintSize="488,1862" sap2010:WorkflowViewState.IdRef="WordApplicationScope_2" SensitivityOperation="None">
+          <p:WordApplicationScope SensitivityLabel="{x:Null}" CreateNewFile="False" DisplayName="Word Application Scope" FilePath="[in_Config(&quot;strTemplatePath_Reminder_Expire&quot;).ToString]" sap:VirtualizedContainerService.HintSize="488,2184" sap2010:WorkflowViewState.IdRef="WordApplicationScope_2" SensitivityOperation="None">
             <p:WordApplicationScope.Body>
               <ActivityAction x:TypeArguments="ui:WordDocument">
                 <ActivityAction.Argument>
                   <DelegateInArgument x:TypeArguments="ui:WordDocument" Name="WordDocumentScope" />
                 </ActivityAction.Argument>
-                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="450,1740" sap2010:WorkflowViewState.IdRef="Sequence_17">
+                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="450,2062" sap2010:WorkflowViewState.IdRef="Sequence_17">
                   <Sequence.Variables>
                     <Variable x:TypeArguments="x:String" Name="strTemplateString" />
                   </Sequence.Variables>
@@ -394,46 +378,31 @@
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <p:WordReplaceText Found="{x:Null}" DisplayName="Replace Text in Document" sap:VirtualizedContainerService.HintSize="416,222" sap2010:WorkflowViewState.IdRef="WordReplaceText_7" Replace="[Environment.NewLine]" ReplaceAll="True" Search="^p" />
+                  <p:WordReplaceText Found="{x:Null}" DisplayName="Replace Text in Document" sap:VirtualizedContainerService.HintSize="416,222" sap2010:WorkflowViewState.IdRef="WordReplaceText_7" Replace="&lt;B&gt;" ReplaceAll="True" Search="^p" />
                   <p:WordReplaceText Found="{x:Null}" DisplayName="Replace Text" sap:VirtualizedContainerService.HintSize="416,222" sap2010:WorkflowViewState.IdRef="WordReplaceText_8" Replace="[Now.Day.ToString]" ReplaceAll="True" Search="$strDateTime$" />
                   <p:WordReplaceText Found="{x:Null}" DisplayName="Replace Text" sap:VirtualizedContainerService.HintSize="416,222" sap2010:WorkflowViewState.IdRef="WordReplaceText_9" Replace="[Now.Month.ToString]" ReplaceAll="True" Search="$strCurrentMonth$" />
                   <p:WordReplaceText Found="{x:Null}" DisplayName="Replace Text" sap:VirtualizedContainerService.HintSize="416,222" sap2010:WorkflowViewState.IdRef="WordReplaceText_10" Replace="[Now.Year.ToString]" ReplaceAll="True" Search="$strCurrentYear$" />
                   <p:WordReplaceText Found="{x:Null}" DisplayName="Replace Text" sap:VirtualizedContainerService.HintSize="416,222" sap2010:WorkflowViewState.IdRef="WordReplaceText_11" Replace="[Now.ToString(&quot;HH&quot;)]" ReplaceAll="True" Search="$strTimeHH$" />
                   <p:WordReplaceText Found="{x:Null}" DisplayName="Replace Text" sap:VirtualizedContainerService.HintSize="416,222" sap2010:WorkflowViewState.IdRef="WordReplaceText_12" Replace="[Now.ToString(&quot;mm&quot;)]" ReplaceAll="True" Search="$strTimeMinute$" />
                   <p:WordReadText DisplayName="Read Text" sap:VirtualizedContainerService.HintSize="416,123" sap2010:WorkflowViewState.IdRef="WordReadText_2" Text="[strTemplateString]" />
-                  <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="CommentOut_3">
-                    <ui:CommentOut.Body>
-                      <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="450,430" sap2010:WorkflowViewState.IdRef="Sequence_19">
-                        <sap:WorkflowViewStateService.ViewState>
-                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                          </scg:Dictionary>
-                        </sap:WorkflowViewStateService.ViewState>
-                        <ui:ModifyText DisplayName="Modify Text" sap:VirtualizedContainerService.HintSize="416,370" sap2010:WorkflowViewState.IdRef="ModifyText_2" OutputText="[strTemplateString]" SourceText="[strTemplateString]">
-                          <ui:ModifyText.Body>
-                            <ActivityAction>
-                              <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_18">
-                                <sap:WorkflowViewStateService.ViewState>
-                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                  </scg:Dictionary>
-                                </sap:WorkflowViewStateService.ViewState>
-                                <ucat:FindAndReplaceTextModification DisplayName="Find and replace text" sap:VirtualizedContainerService.HintSize="334,161" sap2010:WorkflowViewState.IdRef="FindAndReplaceTextModification_2" ReplaceText="[Environment.NewLine]" SearchText="&lt;B&gt;" />
-                              </Sequence>
-                            </ActivityAction>
-                          </ui:ModifyText.Body>
-                        </ui:ModifyText>
-                      </Sequence>
-                    </ui:CommentOut.Body>
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </ui:CommentOut>
+                  <ui:ModifyText DisplayName="Modify Text" sap:VirtualizedContainerService.HintSize="416,379" sap2010:WorkflowViewState.IdRef="ModifyText_4" OutputText="[strTemplateString]" SourceText="[strTemplateString]">
+                    <ui:ModifyText.Body>
+                      <ActivityAction>
+                        <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_18">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ucat:FindAndReplaceTextModification DisplayName="Find and replace text" sap:VirtualizedContainerService.HintSize="334,161" sap2010:WorkflowViewState.IdRef="FindAndReplaceTextModification_2" ReplaceText="[Environment.NewLine]" SearchText="&lt;B&gt;" />
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ModifyText.Body>
+                  </ui:ModifyText>
                   <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="SendEmail - Invoke Workflow File (Workflow\SendEmail.xaml)" sap:VirtualizedContainerService.HintSize="416,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Workflow\SendEmail.xaml">
                     <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="s:String[]" x:Key="in_ARRSTR_TO">[in_Config("strMailSendTo").ToString.Split(",")]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_STR_MAIL_SUBJECT">[in_Config("strMailSubject_NoReport").ToString]</InArgument>
                       <InArgument x:TypeArguments="sd:DataTable" x:Key="in_DT_REPORT_TABLE" />
                       <InArgument x:TypeArguments="x:String" x:Key="in_STR_TEMPLATE_STRING">[strTemplateString]</InArgument>
                       <InArgument x:TypeArguments="x:String" x:Key="in_STR_BODY_SPLITTER">
