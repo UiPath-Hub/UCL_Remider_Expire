@@ -2,6 +2,7 @@
   <x:Members>
     <x:Property Name="in_DT_REPORT_TABLE" Type="InArgument(sd:DataTable)" />
     <x:Property Name="in_STR_TEMPLATE_STRING" Type="InArgument(x:String)" />
+    <x:Property Name="in_STR_BODY_SPLITTER" Type="InArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
@@ -131,109 +132,169 @@
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="SendEmail" sap:VirtualizedContainerService.HintSize="1230,1251" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="SendEmail" sap:VirtualizedContainerService.HintSize="1230,2312" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="strHTMLContent" />
       <Variable x:TypeArguments="x:String" Name="strHeader" />
       <Variable x:TypeArguments="x:String" Name="strFooter" />
-      <Variable x:TypeArguments="x:String" Name="strBodySpliter" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="478,211" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
-      <ui:MultipleAssign.AssignOperations>
-        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
-            <ui:AssignOperation.To>
-              <OutArgument x:TypeArguments="x:String">[strBodySpliter]</OutArgument>
-            </ui:AssignOperation.To>
-            <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:String">$dtUploadInvoiceCompleteReport$</InArgument>
-            </ui:AssignOperation.Value>
-          </ui:AssignOperation>
-          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
-            <ui:AssignOperation.To>
-              <OutArgument x:TypeArguments="x:String">[strHeader]</OutArgument>
-            </ui:AssignOperation.To>
-            <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:String">[in_STR_TEMPLATE_STRING.Split(strBodySpliter).First]</InArgument>
-            </ui:AssignOperation.Value>
-          </ui:AssignOperation>
-          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
-            <ui:AssignOperation.To>
-              <OutArgument x:TypeArguments="x:String">[strFooter]</OutArgument>
-            </ui:AssignOperation.To>
-            <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:String">[in_STR_TEMPLATE_STRING.Replace(strHeader,"").Replace(strBodySpliter,"")]</InArgument>
-            </ui:AssignOperation.Value>
-          </ui:AssignOperation>
-        </scg:List>
-      </ui:MultipleAssign.AssignOperations>
-    </ui:MultipleAssign>
-    <umab:CreateHtmlContent DisplayName="Create HTML Content" sap:VirtualizedContainerService.HintSize="478,186" HtmlContent="[strHTMLContent]" sap2010:WorkflowViewState.IdRef="CreateHtmlContent_1">
-      <umab:CreateHtmlContent.HtmlContentArg>
-        <umabh:HtmlContentArgument HtmlBody="{x:Null}" FilePath=".data/HtmlContent0.html">
-          <umabh:HtmlContentArgument.RuntimeImages>
-            <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-          </umabh:HtmlContentArgument.RuntimeImages>
-          <umabh:HtmlContentArgument.ValueMappings>
-            <scg:List x:TypeArguments="umabh:HtmlValueMappingBase" Capacity="4">
-              <umabh:HtmlTextValueMapping Name="Header" Value="[strHeader]" />
-              <umabh:HtmlTextValueMapping Name="Footer" Value="[strFooter]" />
-              <umabh:HtmlTableValueMapping Name="Report" Value="[in_DT_REPORT_TABLE]" />
-            </scg:List>
-          </umabh:HtmlContentArgument.ValueMappings>
-        </umabh:HtmlContentArgument>
-      </umab:CreateHtmlContent.HtmlContentArg>
-    </umab:CreateHtmlContent>
-    <ui:ModifyText DisplayName="Modify Text" sap:VirtualizedContainerService.HintSize="478,379" sap2010:WorkflowViewState.IdRef="ModifyText_1" OutputText="[strHTMLContent]" SourceText="[strHTMLContent]">
-      <ui:ModifyText.Body>
-        <ActivityAction>
-          <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_2">
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <ucat:FindAndReplaceTextModification DisplayName="Find and replace text" sap:VirtualizedContainerService.HintSize="334,161" sap2010:WorkflowViewState.IdRef="FindAndReplaceTextModification_1" ReplaceText="&#xD;&#xA;table {&#xD;&#xA;width: 100%;&#xD;&#xA;border-collapse: separate;&#xD;&#xA;border-spacing: 0;&#xD;&#xA;border: 1px solid #999;&#xD;&#xA;border-radius: 5px;&#xD;&#xA;overflow: hidden;&#xD;&#xA;}&#xD;&#xA;th {&#xD;&#xA;font-weight: bold;&#xD;&#xA;text-align: center;&#xD;&#xA;padding: 8px;&#xD;&#xA;background-color: #f2f2f2;&#xD;&#xA;border: 1px solid #ddd;&#xD;&#xA;}&#xD;&#xA;td {&#xD;&#xA;text-align: center;&#xD;&#xA;padding: 8px;&#xD;&#xA;border: 1px solid #ddd;&#xD;&#xA;}&#xD;&#xA;&lt;/style&gt;" SearchText="&lt;/style&gt;" />
-          </Sequence>
-        </ActivityAction>
-      </ui:ModifyText.Body>
-    </ui:ModifyText>
-    <umam:SendMailConnections ArgumentAttachmentPaths="{x:Null}" AttachmentList="{x:Null}" AttachmentPaths="{x:Null}" Attachments="{x:Null}" Bcc="{x:Null}" Cc="{x:Null}" ConnectionAccountName="{x:Null}" ContinueOnError="{x:Null}" Mailbox="{x:Null}" MailboxBackup="{x:Reference __ReferenceID0}" ReplyTo="{x:Null}" TextBody="{x:Null}" AttachmentInputMode="Existing" AuthScopesInvalid="False" Body="[strHTMLContent]" ConnectionId="45f40d55-d784-47ae-acc1-d0641011338d" DisplayName="Send Email" sap:VirtualizedContainerService.HintSize="478,452" sap2010:WorkflowViewState.IdRef="SendMailConnections_1" Importance="Normal" InputType="HTML" IsDeliveryReceiptRequested="False" IsReadReceiptRequested="False" SaveAsDraft="False" Subject="test" To="[New String(){&quot;Aphiruth.s@baraadv.co.th&quot;}]" UseConnectionService="True" UseSharedMailbox="False">
-      <umam:SendMailConnections.AttachmentsBackup>
-        <usau:BackupSlot x:TypeArguments="umame:AttachmentInputMode" StoredValue="Existing">
-          <usau:BackupSlot.BackupValues>
-            <scg:Dictionary x:TypeArguments="umame:AttachmentInputMode, scg:List(x:Object)" />
-          </usau:BackupSlot.BackupValues>
-        </usau:BackupSlot>
-      </umam:SendMailConnections.AttachmentsBackup>
-      <umam:SendMailConnections.InputTypeBackup>
-        <usau:BackupSlot x:TypeArguments="umame:BodyInputType" StoredValue="HTML">
-          <usau:BackupSlot.BackupValues>
-            <scg:List x:TypeArguments="x:Object" x:Key="HTML" Capacity="1">
-              <InArgument x:TypeArguments="x:String" />
-            </scg:List>
-            <scg:List x:TypeArguments="x:Object" x:Key="TEXT" Capacity="1">
-              <x:Null />
-            </scg:List>
-          </usau:BackupSlot.BackupValues>
-        </usau:BackupSlot>
-      </umam:SendMailConnections.InputTypeBackup>
-      <umam:SendMailConnections.MailboxArg>
-        <umamm:MailboxArgument SharedMailbox="{x:Null}" UseSharedMailbox="False">
-          <umamm:MailboxArgument.Backup>
-            <usau:BackupSlot x:TypeArguments="umame:MailboxSelectionMode" x:Name="__ReferenceID0" StoredValue="NoMailbox">
-              <usau:BackupSlot.BackupValues>
-                <scg:Dictionary x:TypeArguments="umame:MailboxSelectionMode, scg:List(x:Object)" />
-              </usau:BackupSlot.BackupValues>
-            </usau:BackupSlot>
-          </umamm:MailboxArgument.Backup>
-        </umamm:MailboxArgument>
-      </umam:SendMailConnections.MailboxArg>
-    </umam:SendMailConnections>
+    <If Condition="[String.IsNullOrEmpty(in_STR_BODY_SPLITTER.Trim)]" sap:VirtualizedContainerService.HintSize="514,942" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Then>
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="512,386" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="478,149" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+            <ui:MultipleAssign.AssignOperations>
+              <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
+                  <ui:AssignOperation.To>
+                    <OutArgument x:TypeArguments="x:String">[strHeader]</OutArgument>
+                  </ui:AssignOperation.To>
+                  <ui:AssignOperation.Value>
+                    <InArgument x:TypeArguments="x:String">[in_STR_TEMPLATE_STRING]</InArgument>
+                  </ui:AssignOperation.Value>
+                </ui:AssignOperation>
+              </scg:List>
+            </ui:MultipleAssign.AssignOperations>
+          </ui:MultipleAssign>
+          <umab:CreateHtmlContent DisplayName="Create HTML Content" sap:VirtualizedContainerService.HintSize="478,177" HtmlContent="[strHTMLContent]" sap2010:WorkflowViewState.IdRef="CreateHtmlContent_4">
+            <umab:CreateHtmlContent.HtmlContentArg>
+              <umabh:HtmlContentArgument HtmlBody="{x:Null}" FilePath=".data/HtmlContent0.html">
+                <umabh:HtmlContentArgument.RuntimeImages>
+                  <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                </umabh:HtmlContentArgument.RuntimeImages>
+                <umabh:HtmlContentArgument.ValueMappings>
+                  <scg:List x:TypeArguments="umabh:HtmlValueMappingBase" Capacity="4">
+                    <umabh:HtmlTextValueMapping Name="Header" Value="[strHeader]" />
+                  </scg:List>
+                </umabh:HtmlContentArgument.ValueMappings>
+              </umabh:HtmlContentArgument>
+            </umab:CreateHtmlContent.HtmlContentArg>
+          </umab:CreateHtmlContent>
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="512,417" sap2010:WorkflowViewState.IdRef="Sequence_4">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="478,180" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+            <ui:MultipleAssign.AssignOperations>
+              <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+                  <ui:AssignOperation.To>
+                    <OutArgument x:TypeArguments="x:String">[strHeader]</OutArgument>
+                  </ui:AssignOperation.To>
+                  <ui:AssignOperation.Value>
+                    <InArgument x:TypeArguments="x:String">[in_STR_TEMPLATE_STRING.Split(in_STR_BODY_SPLITTER).First]</InArgument>
+                  </ui:AssignOperation.Value>
+                </ui:AssignOperation>
+                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+                  <ui:AssignOperation.To>
+                    <OutArgument x:TypeArguments="x:String">[strFooter]</OutArgument>
+                  </ui:AssignOperation.To>
+                  <ui:AssignOperation.Value>
+                    <InArgument x:TypeArguments="x:String">[in_STR_TEMPLATE_STRING.Replace(strHeader,"").Replace(in_STR_BODY_SPLITTER,"").Replace( in_STR_BODY_SPLITTER,"")]</InArgument>
+                  </ui:AssignOperation.Value>
+                </ui:AssignOperation>
+              </scg:List>
+            </ui:MultipleAssign.AssignOperations>
+          </ui:MultipleAssign>
+          <umab:CreateHtmlContent DisplayName="Create HTML Content" sap:VirtualizedContainerService.HintSize="478,177" HtmlContent="[strHTMLContent]" sap2010:WorkflowViewState.IdRef="CreateHtmlContent_3">
+            <umab:CreateHtmlContent.HtmlContentArg>
+              <umabh:HtmlContentArgument HtmlBody="{x:Null}" FilePath=".data/HtmlContent1.html">
+                <umabh:HtmlContentArgument.RuntimeImages>
+                  <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                </umabh:HtmlContentArgument.RuntimeImages>
+                <umabh:HtmlContentArgument.ValueMappings>
+                  <scg:List x:TypeArguments="umabh:HtmlValueMappingBase" Capacity="4">
+                    <umabh:HtmlTextValueMapping Name="Header" Value="[strHeader]" />
+                    <umabh:HtmlTextValueMapping Name="Footer" Value="[strFooter]" />
+                    <umabh:HtmlTableValueMapping Name="Report" Value="[in_DT_REPORT_TABLE]" />
+                  </scg:List>
+                </umabh:HtmlContentArgument.ValueMappings>
+              </umabh:HtmlContentArgument>
+            </umab:CreateHtmlContent.HtmlContentArg>
+          </umab:CreateHtmlContent>
+        </Sequence>
+      </If.Else>
+    </If>
+    <If Condition="[Not String.IsNullOrWhiteSpace(strHTMLContent.Trim())]" sap:VirtualizedContainerService.HintSize="514,1347" sap2010:WorkflowViewState.IdRef="If_2">
+      <If.Then>
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="450,991" sap2010:WorkflowViewState.IdRef="Sequence_5">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:ModifyText DisplayName="Modify Text" sap:VirtualizedContainerService.HintSize="416,379" sap2010:WorkflowViewState.IdRef="ModifyText_1" OutputText="[strHTMLContent]" SourceText="[strHTMLContent]">
+            <ui:ModifyText.Body>
+              <ActivityAction>
+                <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ucat:FindAndReplaceTextModification DisplayName="Find and replace text" sap:VirtualizedContainerService.HintSize="334,161" sap2010:WorkflowViewState.IdRef="FindAndReplaceTextModification_1" ReplaceText="&#xA;table {&#xA;width: 100%;&#xA;border-collapse: separate;&#xA;border-spacing: 0;&#xA;border: 1px solid #999;&#xA;border-radius: 5px;&#xA;overflow: hidden;&#xA;}&#xA;th {&#xA;font-weight: bold;&#xA;text-align: center;&#xA;padding: 8px;&#xA;background-color: #f2f2f2;&#xA;border: 1px solid #ddd;&#xA;}&#xA;td {&#xA;text-align: center;&#xA;padding: 8px;&#xA;border: 1px solid #ddd;&#xA;}&#xA;&lt;/style&gt;" SearchText="&lt;/style&gt;" />
+                </Sequence>
+              </ActivityAction>
+            </ui:ModifyText.Body>
+          </ui:ModifyText>
+          <umam:SendMailConnections ArgumentAttachmentPaths="{x:Null}" AttachmentList="{x:Null}" AttachmentPaths="{x:Null}" Attachments="{x:Null}" Bcc="{x:Null}" Cc="{x:Null}" ConnectionAccountName="{x:Null}" ContinueOnError="{x:Null}" Mailbox="{x:Null}" MailboxBackup="{x:Reference __ReferenceID0}" ReplyTo="{x:Null}" TextBody="{x:Null}" AttachmentInputMode="Existing" AuthScopesInvalid="False" Body="[strHTMLContent]" ConnectionId="45f40d55-d784-47ae-acc1-d0641011338d" DisplayName="Send Email" sap:VirtualizedContainerService.HintSize="416,552" sap2010:WorkflowViewState.IdRef="SendMailConnections_1" Importance="Normal" InputType="HTML" IsDeliveryReceiptRequested="False" IsReadReceiptRequested="False" SaveAsDraft="False" Subject="test" To="[New String(){&quot;Aphiruth.s@baraadv.co.th&quot;}]" UseConnectionService="True" UseSharedMailbox="False">
+            <umam:SendMailConnections.AttachmentsBackup>
+              <usau:BackupSlot x:TypeArguments="umame:AttachmentInputMode" StoredValue="Existing">
+                <usau:BackupSlot.BackupValues>
+                  <scg:Dictionary x:TypeArguments="umame:AttachmentInputMode, scg:List(x:Object)" />
+                </usau:BackupSlot.BackupValues>
+              </usau:BackupSlot>
+            </umam:SendMailConnections.AttachmentsBackup>
+            <umam:SendMailConnections.InputTypeBackup>
+              <usau:BackupSlot x:TypeArguments="umame:BodyInputType" StoredValue="HTML">
+                <usau:BackupSlot.BackupValues>
+                  <scg:List x:TypeArguments="x:Object" x:Key="HTML" Capacity="1">
+                    <InArgument x:TypeArguments="x:String" />
+                  </scg:List>
+                  <scg:List x:TypeArguments="x:Object" x:Key="TEXT" Capacity="1">
+                    <x:Null />
+                  </scg:List>
+                </usau:BackupSlot.BackupValues>
+              </usau:BackupSlot>
+            </umam:SendMailConnections.InputTypeBackup>
+            <umam:SendMailConnections.MailboxArg>
+              <umamm:MailboxArgument SharedMailbox="{x:Null}" UseSharedMailbox="False">
+                <umamm:MailboxArgument.Backup>
+                  <usau:BackupSlot x:TypeArguments="umame:MailboxSelectionMode" x:Name="__ReferenceID0" StoredValue="NoMailbox">
+                    <usau:BackupSlot.BackupValues>
+                      <scg:Dictionary x:TypeArguments="umame:MailboxSelectionMode, scg:List(x:Object)" />
+                    </usau:BackupSlot.BackupValues>
+                  </usau:BackupSlot>
+                </umamm:MailboxArgument.Backup>
+              </umamm:MailboxArgument>
+            </umam:SendMailConnections.MailboxArg>
+          </umam:SendMailConnections>
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="450,226" sap2010:WorkflowViewState.IdRef="Sequence_6">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="416,166" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Warn" Message="[&quot;HTML boby empty, no mail send.&quot;]" />
+        </Sequence>
+      </If.Else>
+    </If>
   </Sequence>
 </Activity>

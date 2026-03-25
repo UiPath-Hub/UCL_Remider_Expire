@@ -100,6 +100,7 @@
       <AssemblyReference>System.Data.SqlClient</AssemblyReference>
       <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Word.Activities.Design</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <StateMachine InitialState="{x:Reference __ReferenceID0}" DisplayName="Main_Remider_Expire" sap:VirtualizedContainerService.HintSize="1236,586" sap2010:WorkflowViewState.IdRef="StateMachine_1">
@@ -227,7 +228,7 @@
               </If>
               <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke InitiAllApplications workflow" sap:VirtualizedContainerService.HintSize="452,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Framework\InitAllApplications.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
-                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[Config]</InArgument>
+                  <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="inout_Config">[Config]</InOutArgument>
                   <OutArgument x:TypeArguments="ui:DatabaseConnection" x:Key="out_CON_CONNECTION">[conSQLConnetion]</OutArgument>
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>
@@ -360,13 +361,11 @@
                       <x:Int32 x:Key="DestConnectionPointIndex">25</x:Int32>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <Transition.Condition>
-                    <VisualBasicValue x:TypeArguments="x:Boolean" DisplayName="Visual basic value" ExpressionText="SystemException is Nothing" />
-                  </Transition.Condition>
+                  <Transition.Condition>[SystemException is Nothing]</Transition.Condition>
                   <Transition.To>
-                    <State x:Name="__ReferenceID3" sap2010:Annotation.AnnotationText="Send mail" DisplayName="Process Data" sap:VirtualizedContainerService.HintSize="568,3659" sap2010:WorkflowViewState.IdRef="State_4">
+                    <State x:Name="__ReferenceID3" sap2010:Annotation.AnnotationText="Send mail" DisplayName="Process Data" sap:VirtualizedContainerService.HintSize="210,170" sap2010:WorkflowViewState.IdRef="State_4">
                       <State.Entry>
-                        <Sequence DisplayName="Process" sap:VirtualizedContainerService.HintSize="522,3207" sap2010:WorkflowViewState.IdRef="Sequence_36">
+                        <Sequence DisplayName="Process" sap:VirtualizedContainerService.HintSize="522,3280" sap2010:WorkflowViewState.IdRef="Sequence_36">
                           <Sequence.Variables>
                             <Variable x:TypeArguments="x:String" Name="strTransactionID" />
                           </Sequence.Variables>
@@ -383,7 +382,7 @@
                               <InArgument x:TypeArguments="x:String">[Now.ToLongDateString]</InArgument>
                             </Assign.Value>
                           </Assign>
-                          <TryCatch DisplayName="Try to process transaction" sap:VirtualizedContainerService.HintSize="488,2972" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+                          <TryCatch DisplayName="Try to process transaction" sap:VirtualizedContainerService.HintSize="488,3045" sap2010:WorkflowViewState.IdRef="TryCatch_3">
                             <TryCatch.Variables>
                               <Variable x:TypeArguments="ui:QueueItem[]" Name="qiTransactionItemToUpdateState" />
                             </TryCatch.Variables>
@@ -394,7 +393,7 @@
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
                             <TryCatch.Try>
-                              <Sequence DisplayName="Process the current TransactionItem" sap:VirtualizedContainerService.HintSize="486,1121" sap2010:WorkflowViewState.IdRef="Sequence_24">
+                              <Sequence DisplayName="Process the current TransactionItem" sap:VirtualizedContainerService.HintSize="486,1194" sap2010:WorkflowViewState.IdRef="Sequence_24">
                                 <sap:WorkflowViewStateService.ViewState>
                                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -409,7 +408,7 @@
                                     <InArgument x:TypeArguments="ui:BusinessRuleException">[Nothing]</InArgument>
                                   </Assign.Value>
                                 </Assign>
-                                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Process - Invoke Workflow File (Workflow\Process.xaml)" sap:VirtualizedContainerService.HintSize="452,177" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_11" UnSafe="False" WorkflowFileName="Workflow\Process.xaml">
+                                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Process - Invoke Workflow File (Workflow\Process.xaml)" sap:VirtualizedContainerService.HintSize="452,250" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_11" UnSafe="False" WorkflowFileName="Workflow\Process.xaml">
                                   <ui:InvokeWorkflowFile.Arguments>
                                     <scg:Dictionary x:TypeArguments="x:String, Argument" />
                                   </ui:InvokeWorkflowFile.Arguments>
@@ -703,7 +702,7 @@
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
                       <State.Transitions>
-                        <Transition DisplayName="Success" sap2010:WorkflowViewState.IdRef="Transition_4">
+                        <Transition DisplayName="Successful" sap2010:WorkflowViewState.IdRef="Transition_4">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <av:PointCollection x:Key="ConnectorLocation">745,447 850,447 850,275</av:PointCollection>
@@ -711,9 +710,7 @@
                               <x:Int32 x:Key="DestConnectionPointIndex">19</x:Int32>
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
-                          <Transition.Condition>
-                            <VisualBasicValue x:TypeArguments="x:Boolean" DisplayName="Visual basic value" ExpressionText="SystemException Is Nothing And BusinessException is Nothing" />
-                          </Transition.Condition>
+                          <Transition.Condition>[SystemException Is Nothing And BusinessException is Nothing]</Transition.Condition>
                           <Transition.To>
                             <State x:Name="__ReferenceID1" sap2010:Annotation.AnnotationText="End process and close all applications used." DisplayName="End Process" sap:VirtualizedContainerService.HintSize="200,110" sap2010:WorkflowViewState.IdRef="State_2" IsFinal="True">
                               <State.Entry>
@@ -843,9 +840,7 @@
                           <Transition.To>
                             <x:Reference>__ReferenceID0</x:Reference>
                           </Transition.To>
-                          <Transition.Condition>
-                            <VisualBasicValue x:TypeArguments="x:Boolean" DisplayName="Visual basic value" ExpressionText="SystemException IsNot Nothing" />
-                          </Transition.Condition>
+                          <Transition.Condition>[SystemException IsNot Nothing]</Transition.Condition>
                         </Transition>
                         <Transition DisplayName="Business Exception" sap2010:WorkflowViewState.IdRef="Transition_6">
                           <sap:WorkflowViewStateService.ViewState>
@@ -858,9 +853,7 @@
                           <Transition.To>
                             <x:Reference>__ReferenceID1</x:Reference>
                           </Transition.To>
-                          <Transition.Condition>
-                            <VisualBasicValue x:TypeArguments="x:Boolean" DisplayName="Visual basic value" ExpressionText="BusinessException IsNot Nothing" />
-                          </Transition.Condition>
+                          <Transition.Condition>[BusinessException IsNot Nothing]</Transition.Condition>
                         </Transition>
                       </State.Transitions>
                     </State>
@@ -877,9 +870,7 @@
                   <Transition.To>
                     <x:Reference>__ReferenceID1</x:Reference>
                   </Transition.To>
-                  <Transition.Condition>
-                    <VisualBasicValue x:TypeArguments="x:Boolean" DisplayName="Visual basic value" ExpressionText="SystemException IsNot Nothing" />
-                  </Transition.Condition>
+                  <Transition.Condition>[SystemException IsNot Nothing]</Transition.Condition>
                 </Transition>
               </State.Transitions>
             </State>
