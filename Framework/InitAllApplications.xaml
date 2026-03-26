@@ -237,7 +237,7 @@
                     <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="416,175" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[$&quot;Reading template &quot;&quot;{strNewFilePath}&quot;&quot;...&quot;]" />
                     <Assign DisplayName="Assign update template file path" sap:VirtualizedContainerService.HintSize="416,166" sap2010:WorkflowViewState.IdRef="Assign_5">
                       <Assign.To>
-                        <OutArgument x:TypeArguments="x:Object">[inout_Config( strConfigKey)]</OutArgument>
+                        <OutArgument x:TypeArguments="x:Object">[inout_Config( strConfigKey+ inout_Config("strTemplateKeySubfix").ToString)]</OutArgument>
                       </Assign.To>
                       <Assign.Value>
                         <InArgument x:TypeArguments="x:Object">[strNewFilePath]</InArgument>

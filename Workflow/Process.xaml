@@ -118,13 +118,13 @@
       <AssemblyReference>System.Linq.Queryable</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Process" sap:VirtualizedContainerService.HintSize="1230,6204" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Process" sap:VirtualizedContainerService.HintSize="1230,6848" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <If Condition="[in_DT_GOING_TO_EXPIRE_DATA isnot Nothing AndAlso in_DT_GOING_TO_EXPIRE_DATA.RowCount &gt; 0]" DisplayName="If Transaction reports exist" sap:VirtualizedContainerService.HintSize="524,6802" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[in_DT_GOING_TO_EXPIRE_DATA isnot Nothing AndAlso in_DT_GOING_TO_EXPIRE_DATA.RowCount &gt; 0]" DisplayName="If Transaction reports exist" sap:VirtualizedContainerService.HintSize="524,6825" sap2010:WorkflowViewState.IdRef="If_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -217,7 +217,7 @@
 }]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:GenerateDataTable ColumnSizes="{x:Null}" NewLineSeparator="{x:Null}" Positions="{x:Null}" CSVParsing="True" ColumnSeparators="," DataTable="[dtReport]" DisplayName="Generate Data Table From Text" sap:VirtualizedContainerService.HintSize="488,235" sap2010:WorkflowViewState.IdRef="GenerateDataTable_1" Input="[$&quot;{strColumnName_No},{strColumnName_COMPANY_NAME},{strColumnName_AGREEMENT_NO},{strColumnName_INVENTORY_NAME},{strColumnName_PROFILE_PERIOD_END},{strColumnName_DAYS_UNTIL_END}&#xD;&#xA;{strColumnName_No},{strColumnName_COMPANY_NAME},{strColumnName_AGREEMENT_NO},{strColumnName_INVENTORY_NAME},{strColumnName_PROFILE_PERIOD_END},{strColumnName_DAYS_UNTIL_END}&quot;]" UseColumnHeader="True" />
+          <ui:GenerateDataTable ColumnSizes="{x:Null}" NewLineSeparator="{x:Null}" Positions="{x:Null}" CSVParsing="True" ColumnSeparators="," DataTable="[dtReport]" DisplayName="Generate Data Table From Text" sap:VirtualizedContainerService.HintSize="488,235" sap2010:WorkflowViewState.IdRef="GenerateDataTable_1" Input="[$&quot;{strColumnName_No},{strColumnName_COMPANY_NAME},{strColumnName_AGREEMENT_NO},{strColumnName_INVENTORY_NAME},{strColumnName_PROFILE_PERIOD_END},{strColumnName_DAYS_UNTIL_END}&#xA;{strColumnName_No},{strColumnName_COMPANY_NAME},{strColumnName_AGREEMENT_NO},{strColumnName_INVENTORY_NAME},{strColumnName_PROFILE_PERIOD_END},{strColumnName_DAYS_UNTIL_END}&quot;]" UseColumnHeader="True" />
           <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="488,383" sap2010:WorkflowViewState.IdRef="CommentOut_1">
             <ui:CommentOut.Body>
               <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="450,272" sap2010:WorkflowViewState.IdRef="Sequence_4">
@@ -308,7 +308,7 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </ui:ForEach>
-          <p:WordApplicationScope SensitivityLabel="{x:Null}" CreateNewFile="False" DisplayName="Word Application Scope" FilePath="[in_Config(&quot;strTemplatePath_Reminder_Expire&quot;).ToString]" sap:VirtualizedContainerService.HintSize="488,2016" sap2010:WorkflowViewState.IdRef="WordApplicationScope_1" SensitivityOperation="None">
+          <p:WordApplicationScope SensitivityLabel="{x:Null}" CreateNewFile="False" DisplayName="Word Application Scope" FilePath="[in_Config(&quot;strTemplatePath_Reminder_Expire&quot;+in_Config(&quot;strTemplateKeySubfix&quot;).ToString).ToString]" sap:VirtualizedContainerService.HintSize="488,2016" sap2010:WorkflowViewState.IdRef="WordApplicationScope_1" SensitivityOperation="None">
             <p:WordApplicationScope.Body>
               <ActivityAction x:TypeArguments="ui:WordDocument">
                 <ActivityAction.Argument>
@@ -347,10 +347,12 @@
           </p:WordApplicationScope>
           <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="SendEmail - Invoke Workflow File (Workflow\SendEmail.xaml)" sap:VirtualizedContainerService.HintSize="488,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Workflow\SendEmail.xaml">
             <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="x:String" x:Key="in_STR_TABLE_STYLE">[in_Config("strMailTableStyle").ToString]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_STR_ATTACHMENT_PATH" />
               <InArgument x:TypeArguments="s:String[]" x:Key="in_ARRSTR_TO">[in_Config("strMailSendTo").ToString.Split(",")]</InArgument>
               <InArgument x:TypeArguments="x:String" x:Key="in_STR_MAIL_SUBJECT">[in_Config("strMailSubject_Report").ToString]</InArgument>
               <InArgument x:TypeArguments="sd:DataTable" x:Key="in_DT_REPORT_TABLE">[dtReport]</InArgument>
-              <InArgument x:TypeArguments="x:String" x:Key="in_STR_TEMPLATE_STRING">[strTemplateString]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_STR_MESSAGE_BODY">[strTemplateString]</InArgument>
               <InArgument x:TypeArguments="x:String" x:Key="in_STR_BODY_SPLITTER">[in_Config("strTemplateReplaceString_ExpireDataTable").ToString]</InArgument>
             </ui:InvokeWorkflowFile.Arguments>
           </ui:InvokeWorkflowFile>
@@ -363,7 +365,7 @@
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <p:WordApplicationScope SensitivityLabel="{x:Null}" CreateNewFile="False" DisplayName="Word Application Scope" FilePath="[in_Config(&quot;strTemplatePath_Reminder_Expire&quot;).ToString]" sap:VirtualizedContainerService.HintSize="488,2184" sap2010:WorkflowViewState.IdRef="WordApplicationScope_2" SensitivityOperation="None">
+          <p:WordApplicationScope SensitivityLabel="{x:Null}" CreateNewFile="False" DisplayName="Word Application Scope" FilePath="[in_Config(&quot;strTemplatePath_Reminder_Expire_Not_found&quot;+in_Config(&quot;strTemplateKeySubfix&quot;).ToString).ToString]" sap:VirtualizedContainerService.HintSize="488,2184" sap2010:WorkflowViewState.IdRef="WordApplicationScope_2" SensitivityOperation="None">
             <p:WordApplicationScope.Body>
               <ActivityAction x:TypeArguments="ui:WordDocument">
                 <ActivityAction.Argument>
@@ -401,13 +403,13 @@
                   </ui:ModifyText>
                   <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="SendEmail - Invoke Workflow File (Workflow\SendEmail.xaml)" sap:VirtualizedContainerService.HintSize="416,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Workflow\SendEmail.xaml">
                     <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_STR_TABLE_STYLE">[in_Config("strMailTableStyle").ToString]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_STR_ATTACHMENT_PATH" />
                       <InArgument x:TypeArguments="s:String[]" x:Key="in_ARRSTR_TO">[in_Config("strMailSendTo").ToString.Split(",")]</InArgument>
                       <InArgument x:TypeArguments="x:String" x:Key="in_STR_MAIL_SUBJECT">[in_Config("strMailSubject_NoReport").ToString]</InArgument>
                       <InArgument x:TypeArguments="sd:DataTable" x:Key="in_DT_REPORT_TABLE" />
-                      <InArgument x:TypeArguments="x:String" x:Key="in_STR_TEMPLATE_STRING">[strTemplateString]</InArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_STR_BODY_SPLITTER">
-                        <Literal x:TypeArguments="x:String" Value="" />
-                      </InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_STR_MESSAGE_BODY">[strTemplateString]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_STR_BODY_SPLITTER" />
                     </ui:InvokeWorkflowFile.Arguments>
                   </ui:InvokeWorkflowFile>
                 </Sequence>

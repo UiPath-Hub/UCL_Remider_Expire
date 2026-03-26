@@ -1,9 +1,11 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="SendEmail" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ucat="clr-namespace:UiPath.Core.Activities.TextModifications;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:umab="clr-namespace:UiPath.Mail.Activities.Business;assembly=UiPath.Mail.Activities" xmlns:umabh="clr-namespace:UiPath.Mail.Activities.Business.HtmlEditor;assembly=UiPath.Mail.Activities" xmlns:umam="clr-namespace:UiPath.MicrosoftOffice365.Activities.Mail;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:umame="clr-namespace:UiPath.MicrosoftOffice365.Activities.Mail.Enums;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:umamm="clr-namespace:UiPath.MicrosoftOffice365.Activities.Mail.Models;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:usau="clr-namespace:UiPath.Shared.Activities.Utils;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="SendEmail" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ucat="clr-namespace:UiPath.Core.Activities.TextModifications;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:umab="clr-namespace:UiPath.Mail.Activities.Business;assembly=UiPath.Mail.Activities" xmlns:umabh="clr-namespace:UiPath.Mail.Activities.Business.HtmlEditor;assembly=UiPath.Mail.Activities" xmlns:umam="clr-namespace:UiPath.MicrosoftOffice365.Activities.Mail;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:umame="clr-namespace:UiPath.MicrosoftOffice365.Activities.Mail.Enums;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:umamm="clr-namespace:UiPath.MicrosoftOffice365.Activities.Mail.Models;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:upr="clr-namespace:UiPath.Platform.ResourceHandling;assembly=UiPath.Platform" xmlns:usau="clr-namespace:UiPath.Shared.Activities.Utils;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
+    <x:Property Name="in_STR_TABLE_STYLE" Type="InArgument(x:String)" />
+    <x:Property Name="in_STR_ATTACHMENT_PATH" Type="InArgument(x:String)" />
     <x:Property Name="in_ARRSTR_TO" Type="InArgument(s:String[])" />
     <x:Property Name="in_STR_MAIL_SUBJECT" Type="InArgument(x:String)" />
     <x:Property Name="in_DT_REPORT_TABLE" Type="InArgument(sd:DataTable)" />
-    <x:Property Name="in_STR_TEMPLATE_STRING" Type="InArgument(x:String)" />
+    <x:Property Name="in_STR_MESSAGE_BODY" Type="InArgument(x:String)" />
     <x:Property Name="in_STR_BODY_SPLITTER" Type="InArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
@@ -58,6 +60,7 @@
       <x:String>UiPath.MicrosoftOffice365.Activities</x:String>
       <x:String>UiPath.Core.Activities.TextModifications</x:String>
       <x:String>UiPath.Activities.System.Workflow.Business</x:String>
+      <x:String>UiPath.Platform</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -132,9 +135,10 @@
       <AssemblyReference>UiPath.Platform</AssemblyReference>
       <AssemblyReference>Microsoft.Extensions.DependencyModel</AssemblyReference>
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>UiPath.CodedWorkflows</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="SendEmail" sap:VirtualizedContainerService.HintSize="1230,2291" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="SendEmail" sap:VirtualizedContainerService.HintSize="1230,2465" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="strHTMLContent" />
       <Variable x:TypeArguments="x:String" Name="strHeader" />
@@ -145,12 +149,13 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <If Condition="[String.IsNullOrEmpty(in_STR_BODY_SPLITTER.Trim)]" sap:VirtualizedContainerService.HintSize="514,942" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[String.IsNullOrWhiteSpace(in_STR_BODY_SPLITTER) orelse in_DT_REPORT_TABLE is Nothing]" DisplayName="If data table valid" sap:VirtualizedContainerService.HintSize="514,942" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
         <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="512,386" sap2010:WorkflowViewState.IdRef="Sequence_3">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
           <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="478,149" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
@@ -161,7 +166,7 @@
                     <OutArgument x:TypeArguments="x:String">[strHeader]</OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:String">[in_STR_TEMPLATE_STRING]</InArgument>
+                    <InArgument x:TypeArguments="x:String">[in_STR_MESSAGE_BODY]</InArgument>
                   </ui:AssignOperation.Value>
                 </ui:AssignOperation>
               </scg:List>
@@ -198,7 +203,7 @@
                     <OutArgument x:TypeArguments="x:String">[strHeader]</OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:String">[in_STR_TEMPLATE_STRING.Split(in_STR_BODY_SPLITTER).First]</InArgument>
+                    <InArgument x:TypeArguments="x:String">[in_STR_MESSAGE_BODY.Split(in_STR_BODY_SPLITTER).First]</InArgument>
                   </ui:AssignOperation.Value>
                 </ui:AssignOperation>
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
@@ -206,7 +211,7 @@
                     <OutArgument x:TypeArguments="x:String">[strFooter]</OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:String">[in_STR_TEMPLATE_STRING.Replace(strHeader,"").Replace(in_STR_BODY_SPLITTER,"").Replace( in_STR_BODY_SPLITTER,"")]</InArgument>
+                    <InArgument x:TypeArguments="x:String">[in_STR_MESSAGE_BODY.Replace(strHeader,"").Replace(in_STR_BODY_SPLITTER,"").Replace( in_STR_BODY_SPLITTER,"")]</InArgument>
                   </ui:AssignOperation.Value>
                 </ui:AssignOperation>
               </scg:List>
@@ -231,9 +236,13 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[Not String.IsNullOrWhiteSpace(strHTMLContent.Trim())]" sap:VirtualizedContainerService.HintSize="514,1326" sap2010:WorkflowViewState.IdRef="If_2">
+    <If Condition="[Not String.IsNullOrWhiteSpace(strHTMLContent.Trim())]" sap:VirtualizedContainerService.HintSize="514,1500" sap2010:WorkflowViewState.IdRef="If_2">
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="450,970" sap2010:WorkflowViewState.IdRef="Sequence_5">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="450,1144" sap2010:WorkflowViewState.IdRef="Sequence_5">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="upr:ILocalResource" Name="irAttachment" />
+            <Variable x:TypeArguments="x:Boolean" Name="blAttachmentExists" />
+          </Sequence.Variables>
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -248,12 +257,13 @@
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ucat:FindAndReplaceTextModification DisplayName="Find and replace text" sap:VirtualizedContainerService.HintSize="334,161" sap2010:WorkflowViewState.IdRef="FindAndReplaceTextModification_1" ReplaceText="&#xA;table {&#xA;width: 100%;&#xA;border-collapse: separate;&#xA;border-spacing: 0;&#xA;border: 1px solid #999;&#xA;border-radius: 5px;&#xA;overflow: hidden;&#xA;}&#xA;th {&#xA;font-weight: bold;&#xA;text-align: center;&#xA;padding: 8px;&#xA;background-color: #f2f2f2;&#xA;border: 1px solid #ddd;&#xA;}&#xA;td {&#xA;text-align: center;&#xA;padding: 8px;&#xA;border: 1px solid #ddd;&#xA;}&#xA;&lt;/style&gt;" SearchText="&lt;/style&gt;" />
+                  <ucat:FindAndReplaceTextModification DisplayName="Find and replace text" sap:VirtualizedContainerService.HintSize="334,161" sap2010:WorkflowViewState.IdRef="FindAndReplaceTextModification_1" ReplaceText="[in_STR_TABLE_STYLE+&quot;&lt;/style&gt;&quot;]" SearchText="&lt;/style&gt;" />
                 </Sequence>
               </ActivityAction>
             </ui:ModifyText.Body>
           </ui:ModifyText>
-          <umam:SendMailConnections ArgumentAttachmentPaths="{x:Null}" AttachmentList="{x:Null}" AttachmentPaths="{x:Null}" Attachments="{x:Null}" Bcc="{x:Null}" Cc="{x:Null}" ConnectionAccountName="{x:Null}" ContinueOnError="{x:Null}" Mailbox="{x:Null}" MailboxBackup="{x:Reference __ReferenceID0}" ReplyTo="{x:Null}" TextBody="{x:Null}" AttachmentInputMode="Existing" AuthScopesInvalid="False" Body="[strHTMLContent]" ConnectionId="45f40d55-d784-47ae-acc1-d0641011338d" DisplayName="Send Email" sap:VirtualizedContainerService.HintSize="416,531" sap2010:WorkflowViewState.IdRef="SendMailConnections_1" Importance="Normal" InputType="HTML" IsDeliveryReceiptRequested="False" IsReadReceiptRequested="False" SaveAsDraft="False" Subject="[in_STR_MAIL_SUBJECT]" To="[in_ARRSTR_TO]" UseConnectionService="True" UseSharedMailbox="False">
+          <ui:PathExists DisplayName="Get Local File or Folder" Exists="[blAttachmentExists]" sap:VirtualizedContainerService.HintSize="416,174" sap2010:WorkflowViewState.IdRef="PathExists_1" Path="[in_STR_ATTACHMENT_PATH]" PathType="File" Resource="[irAttachment]" />
+          <umam:SendMailConnections ArgumentAttachmentPaths="{x:Null}" AttachmentList="{x:Null}" AttachmentPaths="{x:Null}" Bcc="{x:Null}" Cc="{x:Null}" ConnectionAccountName="{x:Null}" ContinueOnError="{x:Null}" Mailbox="{x:Null}" MailboxBackup="{x:Reference __ReferenceID0}" ReplyTo="{x:Null}" TextBody="{x:Null}" AttachmentInputMode="Existing" Attachments="[IF(blAttachmentExists,{irAttachment},Nothing)]" AuthScopesInvalid="False" Body="[strHTMLContent]" ConnectionId="45f40d55-d784-47ae-acc1-d0641011338d" DisplayName="Send Email" sap:VirtualizedContainerService.HintSize="416,531" sap2010:WorkflowViewState.IdRef="SendMailConnections_1" Importance="Normal" InputType="HTML" IsDeliveryReceiptRequested="False" IsReadReceiptRequested="False" SaveAsDraft="False" Subject="[in_STR_MAIL_SUBJECT]" To="[in_ARRSTR_TO]" UseConnectionService="True" UseSharedMailbox="False">
             <umam:SendMailConnections.AttachmentsBackup>
               <usau:BackupSlot x:TypeArguments="umame:AttachmentInputMode" StoredValue="Existing">
                 <usau:BackupSlot.BackupValues>
