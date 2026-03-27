@@ -224,13 +224,13 @@
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
                     <ui:GetFileInfoX DisplayName="Get File Info" FilePath="[strPath]" sap:VirtualizedContainerService.HintSize="416,167" sap2010:WorkflowViewState.IdRef="GetFileInfoX_1" Output="[fiCurrentFile]" />
-                    <Assign sap:VirtualizedContainerService.HintSize="416,175" sap2010:WorkflowViewState.IdRef="Assign_1">
+                    <Assign sap:VirtualizedContainerService.HintSize="334,143" sap2010:WorkflowViewState.IdRef="Assign_1">
                       <Assign.To>
                         <OutArgument x:TypeArguments="x:String">[strNewFilePath]</OutArgument>
                       </Assign.To>
                       <Assign.Value>
                         <InArgument x:TypeArguments="x:String" xml:space="preserve">[inout_Config("strProcessedResourceFilePath").ToString.TrimEnd(System.IO.Path.DirectorySeparatorChar
-)+System.IO.Path.DirectorySeparatorChar+ fiCurrentFile.Name]</InArgument>
+)+System.IO.Path.DirectorySeparatorChar+ fiCurrentFile.Name + inout_Config("strTemplateKeySubfix").ToString + fiCurrentFile.Extension]</InArgument>
                       </Assign.Value>
                     </Assign>
                     <ui:CopyFile ContinueOnError="{x:Null}" DestinationResource="{x:Null}" PathResource="{x:Null}" Destination="[strNewFilePath]" DisplayName="Copy File" sap:VirtualizedContainerService.HintSize="416,224" sap2010:WorkflowViewState.IdRef="CopyFile_1" Overwrite="True" Path="[strPath]" />

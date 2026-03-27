@@ -118,13 +118,13 @@
       <AssemblyReference>System.Linq.Queryable</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Process" sap:VirtualizedContainerService.HintSize="1230,6848" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Process" sap:VirtualizedContainerService.HintSize="1230,6910" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <If Condition="[in_DT_GOING_TO_EXPIRE_DATA isnot Nothing AndAlso in_DT_GOING_TO_EXPIRE_DATA.RowCount &gt; 0]" DisplayName="If Transaction reports exist" sap:VirtualizedContainerService.HintSize="524,6825" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[in_DT_GOING_TO_EXPIRE_DATA isnot Nothing AndAlso in_DT_GOING_TO_EXPIRE_DATA.RowCount &gt; 0]" DisplayName="If Transaction reports exist" sap:VirtualizedContainerService.HintSize="524,6887" sap2010:WorkflowViewState.IdRef="If_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -132,7 +132,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then Reminder_Expire" sap:VirtualizedContainerService.HintSize="522,4451" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence DisplayName="Then Reminder_Expire" sap:VirtualizedContainerService.HintSize="522,4513" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <Sequence.Variables>
             <Variable x:TypeArguments="sd:DataTable" Name="dtReport" />
             <Variable x:TypeArguments="x:String" Name="strColumnName_No" />
@@ -150,7 +150,7 @@
               <x:Boolean x:Key="IsPinned">False</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="488,304" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+          <ui:MultipleAssign sap2010:Annotation.AnnotationText="Define the Report Table Column's Name" DisplayName="Assign" sap:VirtualizedContainerService.HintSize="488,335" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
             <ui:MultipleAssign.AssignOperations>
               <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
@@ -203,8 +203,13 @@
                 </ui:AssignOperation>
               </scg:List>
             </ui:MultipleAssign.AssignOperations>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
           </ui:MultipleAssign>
-          <Assign sap:VirtualizedContainerService.HintSize="488,175" sap2010:WorkflowViewState.IdRef="Assign_4">
+          <Assign sap2010:Annotation.AnnotationText="Mapping Report table with SQL Query Result Table" DisplayName="Assign " sap:VirtualizedContainerService.HintSize="488,206" sap2010:WorkflowViewState.IdRef="Assign_4">
             <Assign.To>
               <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[dictContentDataMap]</OutArgument>
             </Assign.To>
@@ -216,6 +221,11 @@
 { strColumnName_DAYS_UNTIL_END,"DAYS_UNTIL_END"}
 }]</InArgument>
             </Assign.Value>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
           </Assign>
           <ui:GenerateDataTable ColumnSizes="{x:Null}" NewLineSeparator="{x:Null}" Positions="{x:Null}" CSVParsing="True" ColumnSeparators="," DataTable="[dtReport]" DisplayName="Generate Data Table From Text" sap:VirtualizedContainerService.HintSize="488,235" sap2010:WorkflowViewState.IdRef="GenerateDataTable_1" Input="[$&quot;{strColumnName_No},{strColumnName_COMPANY_NAME},{strColumnName_AGREEMENT_NO},{strColumnName_INVENTORY_NAME},{strColumnName_PROFILE_PERIOD_END},{strColumnName_DAYS_UNTIL_END}&#xA;{strColumnName_No},{strColumnName_COMPANY_NAME},{strColumnName_AGREEMENT_NO},{strColumnName_INVENTORY_NAME},{strColumnName_PROFILE_PERIOD_END},{strColumnName_DAYS_UNTIL_END}&quot;]" UseColumnHeader="True" />
           <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="488,383" sap2010:WorkflowViewState.IdRef="CommentOut_1">
