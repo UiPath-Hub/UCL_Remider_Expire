@@ -6,6 +6,9 @@
 .local
 Data\Input\*
 Data\Output\*
+
+# UiPath environment-specific
+.project/
 ################################################################################
 # End of UiPath Studio common ignores
 ################################################################################
